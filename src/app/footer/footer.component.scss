@@ -1,0 +1,34 @@
+.social-section ul li {
+  display: inline-block;
+  padding: 0 8px;
+  font-size: 18px;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+footer.page-footer {
+  padding-top: 25px;
+}
+
+footer.page-footer .footer-copyright {
+  line-height: normal;
+  padding-top: 10px;
+}
+
+footer.page-footer ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer.page-footer li {
+  list-style: none;
+}
+
+@media only screen and (max-width: 992px) {
+  .center-on-small-only {
+    text-align: center;
+  }
+}

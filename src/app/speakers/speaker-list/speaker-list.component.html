@@ -1,0 +1,106 @@
+<app-top-menu></app-top-menu>
+
+<div class="between-sections"><br><br></div>
+<div class="container">
+  <!--Section: Speakers-->
+  <section class="section team-section pb-3">
+    <h1 class="section-heading">Our Amazing Speakers</h1>
+    <div class="text-center" *ngIf="isLoggedIn() && isAdmin()">
+      <button type="button" class="btn btn-success" routerLink="/speakers/new">Create Speaker</button>
+    </div>
+    <div class="row text-center" *ngIf="(speakers | async)?.length !== 0 && speakers | async as speakers">
+      <div *ngFor="let speaker of speakers" class="col-lg-3 col-md-6 mb-r" style="padding-left: 40px; padding-right: 40px; padding-bottom: 50px; margin: 0 auto;">
+        <div class="avatar show-modal" (click)="showModal(speaker)" title="{{ speaker.name }}" alt="{{ speaker.name }}">
+          <img *ngIf="!speaker.photoURL" class="rounded-circle z-depth-1" style="background-image: url('../../../assets/img/user-default.png')">
+          <img *ngIf="speaker.photoURL" class="rounded-circle z-depth-1" [ngStyle]="{'background-image': 'url(' + speaker.photoURL + ')'}">
+        </div>
+        <button type="button" class="btn btn-sm btn-primary" *ngIf="isLoggedIn() && isAdmin()" routerLink="/speakers/{{ speaker.$key }}/edit">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-danger" *ngIf="isLoggedIn() && isAdmin()" (click)="deleteSpeaker(speaker)">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+        <h4 class="show-modal" (click)="showModal(speaker)" [innerHTML]="speaker.name"></h4>
+        <h6>
+          <span *ngIf="speaker.title" [innerHTML]="speaker.title"></span>
+          <br/>
+          <strong *ngIf="speaker.company">@
+            <span [innerHTML]="speaker.company"></span>
+          </strong>
+        </h6>
+        <p class="speaker-bio show-modal" (click)="showModal(speaker)" [innerHTML]="speaker.description"></p>
+        <a *ngIf="speaker.googleLink" class="icons-sm gplus-ic" href="https://plus.google.com/{{ speaker.googleLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-google-plus" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speaker.facebookLink" class="icons-sm fb-ic" href="https://www.facebook.com/{{ speaker.facebookLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speaker.twitterLink" class="icons-sm tw-ic" href="https://twitter.com/{{ speaker.twitterLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speaker.linkedinLink" class="icons-sm li-ic" href="https://www.linkedin.com/{{ speaker.linkedinLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speaker.githubLink" class="icons-sm git-ic" href="https://github.com/{{ speaker.githubLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speaker.websiteLink" class="icons-sm email-ic" href="{{ speaker.websiteLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-chrome" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+    <div class="text-center" *ngIf="(speakers | async)?.length === 0">
+      <h5>Stay tuned! Speakers are being added soon!</h5>
+    </div>
+  </section>
+  <!--Section: Speakers-->
+</div>
+<div class="between-sections"><br><br></div>
+
+
+<!-- Speaker Detail Modal -->
+<div mdbModal #speakerModal="mdb-modal" [config]="{keyboard: false}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="speakerModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="speakerModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="modalLabel">
+          <strong>
+            <span [innerHTML]="speakerDetail?.name"></span>
+          </strong>
+          <h6 *ngIf="speakerDetail?.title && speakerDetail?.company">
+            <span *ngIf="speakerDetail?.title" [innerHTML]="speakerDetail?.title"></span>
+            <strong *ngIf="speakerDetail?.company">@
+              <span [innerHTML]="speakerDetail?.company"></span>
+            </strong>
+          </h6>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p [innerHTML]="speakerDetail?.description"></p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <a *ngIf="speakerDetail?.googleLink" class="icons-sm gplus-ic" href="https://plus.google.com/{{ speakerDetail?.googleLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-google-plus" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speakerDetail?.facebookLink" class="icons-sm fb-ic" href="https://www.facebook.com/{{ speakerDetail?.facebookLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speakerDetail?.twitterLink" class="icons-sm tw-ic" href="https://twitter.com/{{ speakerDetail?.twitterLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speakerDetail?.linkedinLink" class="icons-sm li-ic" href="https://www.linkedin.com/{{ speakerDetail?.linkedinLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speakerDetail?.githubLink" class="icons-sm git-ic" href="https://github.com/{{ speakerDetail?.githubLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="speakerDetail?.websiteLink" class="icons-sm email-ic" href="{{ speakerDetail?.websiteLink }}" target="_blank" rel="noopener">
+          <i class="fa fa-chrome" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

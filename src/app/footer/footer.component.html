@@ -1,0 +1,66 @@
+<!--Footer-->
+<footer class="page-footer center-on-small-only elegant-color-dark d-print-none" *ngIf="siteConfig | async as config">
+
+  <!--Footer Links-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 ml-auto">
+        <h5 class="title font-weight-bold mt-3 mb-4">About {{ config?.groupName }}</h5>
+        <!--Social buttons-->
+        <div class="social-section mb-3">
+          <ul>
+            <li *ngIf="config?.googleLink"><a class="btn-social-all" href="https://plus.google.com/{{ config?.googleLink }}" title="Google+" target="_blank" rel="noopener"><i class="fa fa-google-plus"></i></a></li>
+            <li *ngIf="config?.facebookLink"><a class="btn-social-all" href="https://www.facebook.com/{{ config?.facebookLink }}" title="Facebook" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a></li>
+            <li *ngIf="config?.twitterLink"><a class="btn-social-all" href="https://twitter.com/{{ config?.twitterLink }}" title="Twitter" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li>
+            <li *ngIf="config?.instagramLink"><a class="btn-social-all" href="https://www.instagram.com/{{ config?.instagramLink }}" title="Instagram" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>
+            <li *ngIf="config?.meetupLink"><a class="btn-social-all" href="https://www.meetup.com/{{ config?.meetupLink }}" title="Meetup" target="_blank" rel="noopener"><i class="fa fa-meetup"></i></a></li>
+            <li *ngIf="config?.githubLink"><a class="btn-social-all" href="https://github.com/{{ config?.githubLink }}" title="GitHub" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li>
+          </ul>
+        </div>
+        <!--/.Social buttons-->
+        <p>We are a technology user group that meets regularly to discuss the latest Google Technologies, Tools, SDKs, APIs, and much more.</p>
+        <p><small><strong>Disclaimer:</strong>&nbsp;<em>{{ config?.groupName }} is an independent group; our activities and the opinions expressed here should in no way be linked to Google, the corporation.</em></small></p>
+      </div>
+      <hr class="w-100 clearfix d-sm-none">
+      <div class="col-lg-2 col-md-6 ml-auto">
+        <h5 class="title font-weight-bold mt-3 mb-4">Links</h5>
+        <ul>
+          <li><a [href]="config?.groupWebsite" target="_blank" rel="noopener">{{ config?.groupName }}</a></li>
+          <li><a href="https://developers.google.com/" target="_blank" rel="noopener">Google Developers</a></li>
+          <li><a href="https://www.womentechmakers.com/" target="_blank" rel="noopener">Women Techmakers</a></li>
+        </ul>
+      </div>
+      <hr class="w-100 clearfix d-sm-none">
+      <div class="col-lg-2 col-md-6 ml-auto">
+        <h5 class="title font-weight-bold mt-3 mb-4">Contact</h5>
+        <ul>
+          <li><a href="mailto:{{ config?.eventEmail }}" target="_blank" rel="noopener">{{ config?.eventEmail }}</a></li>
+          <li *ngIf="config?.eventTwitter"><a href="https://twitter.com/intent/tweet?text=@{{ config?.eventTwitter }}" target="_blank" rel="noopener">@{{ config?.eventTwitter }}</a></li>
+          <li *ngIf="config?.twitterLink"><a href="https://twitter.com/intent/tweet?text=@{{ config?.twitterLink }}" target="_blank" rel="noopener">@{{ config?.twitterLink }}</a></li>
+        </ul>
+      </div>
+      <hr class="w-100 clearfix d-sm-none">
+      <div class="col-lg-2 col-md-6 ml-auto">
+        <h5 class="title font-weight-bold mt-3 mb-4">FAQ</h5>
+        <ul>
+          <li><a routerLink="/code-of-conduct">Code of Conduct</a></li>
+          <li><a href="https://meetup.com/pro/gdg" target="_blank" rel="noopener">Google Developer Groups</a></li>
+          <li><a href="https://developers.google.com/events/devfest/" target="_blank" rel="noopener">GDG DevFest Season</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <!--/.Footer Links-->
+
+  <!--Copyright-->
+  <div class="footer-copyright">
+    <div class="container-fluid text-center">
+      &copy; {{ copyright }} Copyright <a [href]="config?.groupWebsite" target="_blank" rel="noopener">{{ config?.groupName }}</a>
+      <br>Based on the <a href="https://github.com/neojato/DeLorean-v2" target="_blank" rel="noopener">DeLorean Project</a>
+    </div>
+  </div>
+  <!--/.Copyright-->
+
+</footer>
+<!--/.Footer-->

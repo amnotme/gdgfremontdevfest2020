@@ -1,0 +1,58 @@
+<app-top-menu></app-top-menu>
+
+<div class="between-sections"><br><br></div>
+<div class="container">
+  <!--Section: Schedule-->
+  <section class="section">
+    <form autocomplete="off" novalidate>
+      <legend>Add Session</legend>
+      <br>
+      <div style="padding-bottom: 25px;">
+        <label for="section">Section Name:&nbsp;</label>
+        <select class="mdb-select" id="section" [(ngModel)]="session.section" name="section">
+          <option value="" disabled selected>Choose your option</option>
+          <option *ngFor="let section of (sections | async)" value="{{ section.$key }}">{{ section.title }}</option>
+        </select>
+      </div>
+      <div class="md-form">
+        <input mdbActive type="text" id="room" class="form-control" [(ngModel)]="session.room" name="room">
+        <label for="room">Room Name:</label>
+      </div>
+      <div class="md-form">
+        <input mdbActive type="text" id="title" class="form-control" [(ngModel)]="session.title" name="title">
+        <label for="title">Session Title:</label>
+      </div>
+      <div class="md-form">
+        <input mdbActive type="text" id="time" class="form-control" [(ngModel)]="session.time" name="time">
+        <label for="time">Session Time: <em>(ex. 8:30 - 9:30 AM)</em></label>
+      </div>
+      <div class="md-form">
+        <input mdbActive type="text" id="tag" class="form-control" [(ngModel)]="session.tag" name="tag">
+        <label for="tag">Session Tag: <em>(ex. Mobile, Web, IoT, etc.)</em></label>
+      </div>
+      <div style="padding-bottom: 25px;">
+        <label for="level">Session Level:&nbsp;</label>
+        <select class="mdb-select" id="level" [(ngModel)]="session.level" name="level">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+      </div>
+      <div class="md-form">
+        <textarea mdbActive type="text" id="abstract" class="md-textarea md-textarea-auto form-control" style="height: 100px" [(ngModel)]="session.abstract" name="abstract"></textarea>
+        <label for="abstract">Session Abstract:</label>
+      </div>
+      <div style="padding-bottom: 25px;" *ngIf="(speakers | async)?.length > 0">
+        <label for="level">Speaker(s):</label>
+        <select multiple class="form-control" id="level" [(ngModel)]="session.speakers" name="speakers">
+          <option *ngFor="let speaker of (speakers | async)" [value]="speaker.$key">{{ speaker.name }}</option>
+        </select>
+      </div>
+    </form>
+    <br><br>
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="save()">Save Changes</button>
+    </div>
+  </section>
+</div>

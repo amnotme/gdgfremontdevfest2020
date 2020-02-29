@@ -1,0 +1,12 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./styles/delorean.scss";
+@import "./styles/loading.scss";
+
+.intro-1 {
+  background: url("assets/img/hero.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.Leo {
+	background-image: url('https://images.app.goo.gl/UPGpGkmfZkc18qqk6');
+}

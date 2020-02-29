@@ -1,0 +1,81 @@
+<app-top-menu></app-top-menu>
+
+<div class="between-sections d-print-none"><br><br></div>
+<div class="container">
+  <!--Section: Schedule-->
+  <section class="section">
+    <div class="d-print-none">
+      <div class="pull-right" style="margin-top: -45px;">
+        <a href="javascript:window.print();" title="Print Schedule"><i class="fa fa-print" aria-hidden="true"></i> Print Schedule</a>
+      </div>
+      <h1 class="section-heading">Our Schedule</h1>
+      <div class="text-center" *ngIf="isLoggedIn() && isAdmin()">
+        <button type="button" class="btn btn-success" (click)="sectionModal.show()">Create Section</button>
+        <button type="button" class="btn btn-primary" routerLink="/sessions/new">Create Session</button>
+      </div>
+      <div class="text-center" *ngIf="isLoggedIn()">
+        <button type="button" class="btn btn-primary" routerLink="/my-schedule">View My Schedule</button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover text-xs-center">
+        <tbody *ngFor="let section of sections | async">
+          <tr class="elegant-color-dark">
+            <td colspan="4" class="text-center" style="font-size: 1em; color: #fff;">
+              <span class="section-title" [innerHTML]="section.title"></span>
+              <button type="button" class="btn-sm btn-danger pull-right" *ngIf="isLoggedIn() && isAdmin()" (click)="deleteSection(section)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+          <tr *ngFor="let session of sessions | async" (click)="openDetails(session)" [ngClass]="{'session-link': session.abstract}">
+            <table *ngIf="section.$key === session.section" width="100%">
+              <tr>
+                <td class="text-xs-left" style="width: 50%">
+                  <span [innerHTML]="session.title"></span><br>
+                  <span *ngFor="let speaker of session.speakers; let i = index;">
+                    <small [innerHTML]="getSpeakerName(speaker)"></small><span *ngIf="session.speakers.length > 1 && i+1 != session.speakers.length">, </span>
+                  </span>
+                </td>
+                <td class="d-none d-md-block text-center"><span [innerHTML]="session.tag"></span></td>
+                <td class="text-center" style="width: 16%" nowrap><span [innerHTML]="session.room"></span></td>
+                <td style="width: 16%; text-align: right;" nowrap><span [innerHTML]="session.time"></span></td>
+              </tr>
+            </table>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="(sessions | async)?.length === 0" class="text-center">
+      <h5>Stay tuned! Sessions will be added soon!</h5>
+    </div>
+  </section>
+  <!--Section: Schedule-->
+</div>
+<div class="between-sections"><br><br></div>
+
+
+<!-- Modal -->
+<div mdbModal #sectionModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="CreateSection" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form (submit)="addSection(title.value)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title w-100" id="CreateSection">Create Section</h4>
+          <button type="button" class="close pull-right" (click)="sectionModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="md-form form-sm">
+            <i class="fa fa-tag prefix"></i>
+            <input mdbActive type="text" id="sectionName" class="form-control" #title>
+            <label for="sectionName">Section name</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal -->
